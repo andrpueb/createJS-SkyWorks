@@ -15,6 +15,13 @@ window.onload = function() {
 	var greyCopy;
 	var stamp;
 	var stampShadow;
+	var button;
+	var elipse;
+	var findMore;
+  var voucherText;
+  var blueCopyThird;
+  var limitedOfferThird;
+  var lineRental;
 
   // store a reference to the canvas which we will draw on.
   var stage = new createjs.Stage("stage");
@@ -71,13 +78,30 @@ window.onload = function() {
     }, {
       id: "stampShadow",
       src: "images/stampShadow.png"
+    }, {
+      id: "elipse",
+      src: "images/elipse.png"
+    }, {
+      id: "findMore",
+      src: "images/findMore.png"
+    }, {
+      id: "voucherText",
+      src: "images/voucher.png"
+    }, {
+      id: "blueCopyThird",
+      src: "images/blueCopyThird.png"
+    }, {
+      id: "limitedOfferThird",
+      src: "images/limitedOfferThird.png"
     }
   ]);
 
   function handleAllImagesLoaded() {
     console.log("All the images have loaded.");
+    setTimeout(timeGone, 15000);
     drawTheBannerBackground();
 		drawLogo();
+
   }
 
   function drawTheBannerBackground() {
@@ -119,7 +143,11 @@ window.onload = function() {
 		shadowDzr.x = 50;
 		deezer.y = 118;
 		deezer.x = 50;
+    deezer.alpha = 0;
 		stage.addChild(shadowDzr, deezer);
+    createjs.Tween.get(deezer).to({
+      alpha: 1
+    }, 1000);
 	};
 	function drawMS(){
 		ms = new createjs.Bitmap(loader.getResult("ms"));
@@ -128,7 +156,11 @@ window.onload = function() {
 		shadowMs.x = 169;
 		ms.y = 120;
 		ms.x = 169;
+    ms.alpha = 0;
 		stage.addChild(shadowMs, ms);
+    createjs.Tween.get(ms).to({
+      alpha: 1
+    }, 1000);
 	};
 
 
@@ -196,10 +228,12 @@ window.onload = function() {
 		stamp = new createjs.Bitmap(loader.getResult("stamp"));
 		stamp.y = -200;
 		stamp.x = 65;
-		stampShadow = new createjs.Bitmap(loader.getResult)
-		stage.addChild(stamp);
+		stampShadow = new createjs.Bitmap(loader.getResult("stampShadow"))
+		stampShadow.y = 300
+		stampShadow.x = 65;
+		stage.addChild(stampShadow, stamp );
 		createjs.Tween.get(stamp).to({y: 65}, 1500, createjs.Ease.bounceOut);
-		drawStamp.alpha = 1;
+		createjs.Tween.get(stampShadow).to({y: 200}, 1500, createjs.Ease.bounceOut);
 	}
 
 
@@ -207,6 +241,7 @@ window.onload = function() {
 		createjs.Tween.get(joinSky).to({alpha: 0}, 500);
 		createjs.Tween.get(greyCopy).to({alpha: 0}, 500);
 		createjs.Tween.get(stamp).to({alpha: 0}, 500);
+		createjs.Tween.get(stampShadow).to({alpha: 0}, 500);
 	}
 
   function frame2() {
@@ -220,9 +255,69 @@ window.onload = function() {
     setTimeout(frame3, 3000);
   }
 
+	function drawButton(){
+		button = new createjs.Shape();
+		button.x = 135;
+		button.y = 195;
+		button.graphics.beginLinearGradientFill(["#9a2c7c", "#174395"], [0, 1], 0, 0, 80, 80).drawRoundRect(0, 0, 130, 35, 8, 8);
+    elipse = new createjs.Bitmap(loader.getResult("elipse"));
+		elipse.x = 130;
+		elipse.y = 195;
+		findMore = new createjs.Bitmap(loader.getResult("findMore"));
+		findMore.x = 152;
+		findMore.y = 205;
+		stage.addChild(button, elipse, findMore);
+	}
+
+  function drawVoucherText(){
+		voucherText = new createjs.Bitmap(loader.getResult("voucherText"));
+		voucherText.x = 12;
+		voucherText.y = 30;
+    voucherText.alpha = 0;
+		stage.addChild(voucherText);
+    createjs.Tween.get(voucherText).to({alpha: 1}, 1000);
+	}
+
+  function drawBluecopyThird(){
+    blueCopyThird = new createjs.Bitmap(loader.getResult("blueCopyThird"));
+		blueCopyThird.x = 35;
+		blueCopyThird.y = 90;
+    blueCopyThird.alpha = 0;
+		stage.addChild(blueCopyThird);
+    createjs.Tween.get(blueCopyThird).to({alpha: 1}, 1000);
+  }
+
+  function drawLimitedOffer(){
+    limitedOfferThird = new createjs.Bitmap(loader.getResult("limitedOfferThird"));
+		limitedOfferThird.x = 70;
+		limitedOfferThird.y = 130;
+    limitedOfferThird.alpha = 0;
+		stage.addChild(limitedOfferThird);
+    createjs.Tween.get(limitedOfferThird).to({alpha: 1}, 1000);
+  }
+
+  function drawLineRental(){
+    lineRental = new createjs.Text("Sky Line Rental at £16.40pm applies","10px skyFont", "#afafaf");
+    lineRental.x = 70;
+    lineRental.y = 165;
+    lineRental.alpha = 0;
+    stage.addChild(lineRental);
+    createjs.Tween.get(lineRental).to({alpha: 1}, 1000);
+  }
+
+
   function frame3() {
     console.log("draw and animate frame three.");
     // refer to the creative brief, frame 3 for guidance.
+		drawButton();
+    drawVoucherText();
+    setTimeout(drawBluecopyThird, 500)
+    setTimeout(drawLimitedOffer, 1000)
+    setTimeout(drawLineRental, 1500);
+  }
+
+  function timeGone(){
+    console.log("15 seconds here");
   }
 
 };

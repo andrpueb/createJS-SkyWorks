@@ -1,6 +1,12 @@
 @charset "UTF-8";
 /* CSS Document */
 @font-face {
-    font-family: 'skyFont';
-    src: url('fonts/SkyText-Bold.ttf');
+    font-family: skyFont;
+    src: url(../../fonts/SkyText-Regular.ttf);
+}
+
+body{
+  width: 300px;
+  height: 250px;
+  margin: auto;
 }
