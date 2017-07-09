@@ -22,6 +22,7 @@ window.onload = function() {
   var blueCopyThird;
   var limitedOfferThird;
   var lineRental;
+  var sheen;
 
   // store a reference to the canvas which we will draw on.
   var stage = new createjs.Stage("stage");
@@ -133,7 +134,7 @@ window.onload = function() {
 		logo.alpha = 0;
 		createjs.Tween.get(logo).to({
       alpha: 1
-    }, 1000);
+    }, 500);
 	}
 
 	function drawDeezer(){
@@ -147,7 +148,7 @@ window.onload = function() {
 		stage.addChild(shadowDzr, deezer);
     createjs.Tween.get(deezer).to({
       alpha: 1
-    }, 1000);
+    }, 500);
 	};
 	function drawMS(){
 		ms = new createjs.Bitmap(loader.getResult("ms"));
@@ -160,7 +161,7 @@ window.onload = function() {
 		stage.addChild(shadowMs, ms);
     createjs.Tween.get(ms).to({
       alpha: 1
-    }, 1000);
+    }, 500);
 	};
 
 
@@ -185,12 +186,12 @@ window.onload = function() {
 	}
 
 	function fadeFrameOne(){
-		createjs.Tween.get(blueCopy).to({alpha: 0}, 500);
-		createjs.Tween.get(chooseReward).to({alpha: 0}, 500);
-		createjs.Tween.get(ms).to({alpha: 0}, 500);
-		createjs.Tween.get(deezer).to({alpha: 0}, 500);
-		createjs.Tween.get(shadowDzr).to({alpha: 0}, 500);
-		createjs.Tween.get(shadowMs).to({alpha: 0}, 500);
+		createjs.Tween.get(blueCopy).to({alpha: 0}, 200);
+		createjs.Tween.get(chooseReward).to({alpha: 0}, 200);
+		createjs.Tween.get(ms).to({alpha: 0}, 200);
+		createjs.Tween.get(deezer).to({alpha: 0}, 200);
+		createjs.Tween.get(shadowDzr).to({alpha: 0}, 200);
+		createjs.Tween.get(shadowMs).to({alpha: 0}, 200);
 	}
 
   function frame1() {
@@ -198,9 +199,9 @@ window.onload = function() {
 		drawDeezer();
 		drawMS();
 		drawLogo();
-		drawChooseReward();
-		setTimeout(drawBluecopy, 500);
-		setTimeout(fadeFrameOne, 2000);
+		setTimeout(drawChooseReward, 500);
+		setTimeout(drawBluecopy, 1000);
+		setTimeout(fadeFrameOne, 3000);
     // refer to the creative brief, frame 1 for guidance.
     // after a timeout and the animations have completed, draw frame 2.
     setTimeout(frame2, 3000);
@@ -232,33 +233,35 @@ window.onload = function() {
 		stampShadow.y = 300
 		stampShadow.x = 65;
 		stage.addChild(stampShadow, stamp );
-		createjs.Tween.get(stamp).to({y: 65}, 1500, createjs.Ease.bounceOut);
-		createjs.Tween.get(stampShadow).to({y: 200}, 1500, createjs.Ease.bounceOut);
+		createjs.Tween.get(stamp).to({y: 65}, 800, createjs.Ease.bounceOut);
+		createjs.Tween.get(stampShadow).to({y: 200}, 800, createjs.Ease.bounceOut);
 	}
 
 
 	function fadeFramdeTwo(){
-		createjs.Tween.get(joinSky).to({alpha: 0}, 500);
-		createjs.Tween.get(greyCopy).to({alpha: 0}, 500);
-		createjs.Tween.get(stamp).to({alpha: 0}, 500);
-		createjs.Tween.get(stampShadow).to({alpha: 0}, 500);
+		createjs.Tween.get(joinSky).to({alpha: 0}, 200);
+		createjs.Tween.get(greyCopy).to({alpha: 0}, 200);
+		createjs.Tween.get(stamp).to({alpha: 0}, 200);
+		createjs.Tween.get(stampShadow).to({alpha: 0}, 200);
 	}
 
   function frame2() {
     console.log("draw and animate frame two.");
     // refer to the creative brief, frame 2 for guidance.
-		drawJoinSky();
-		setTimeout(drawGreyCopy,  500);
-		drawStamp();
-		setTimeout(fadeFramdeTwo, 2000);
+		setTimeout(drawJoinSky, 500);
+		setTimeout(drawGreyCopy, 1000);
+		setTimeout(drawStamp, 1000);
+		setTimeout(fadeFramdeTwo, 3000);
     // after a timeout and the animations have completed, draw frame 3.
     setTimeout(frame3, 3000);
   }
 
 	function drawButton(){
 		button = new createjs.Shape();
+    button.setBounds(135, 195, 50, 20);
 		button.x = 135;
 		button.y = 195;
+    button.alpha = 0;
 		button.graphics.beginLinearGradientFill(["#9a2c7c", "#174395"], [0, 1], 0, 0, 80, 80).drawRoundRect(0, 0, 130, 35, 8, 8);
     elipse = new createjs.Bitmap(loader.getResult("elipse"));
 		elipse.x = 130;
@@ -267,7 +270,30 @@ window.onload = function() {
 		findMore.x = 152;
 		findMore.y = 205;
 		stage.addChild(button, elipse, findMore);
+    createjs.Tween.get(button).to({alpha: 1}, 500);
 	}
+
+  function drawSheen(){
+
+    sheen = new createjs.Shape();
+    sheen.x = 130;
+    sheen.y = 170;
+    sheen.alpha = 0.3;
+    sheen.rotation = 20;
+    sheen.graphics.beginFill("white").drawRect(20, 0, 8, 60);
+    var myMask = new createjs.Shape();
+    myMask.graphics.mt(135,195).lt(265,195).lt(265,230).lt(135,230).lt(135,195).cp();
+    myMask.alpha = 5;
+    sheen.mask = myMask;
+    var blurFilter = new createjs.BlurFilter(5,5,1);
+    sheen.filters = [blurFilter];
+    var bounds = blurFilter.getBounds();
+    sheen.cache(-50+bounds.x, -50+bounds.y, 100+bounds.width, 100+bounds.height);
+    stage.addChild(myMask,sheen);
+    createjs.Tween.get(sheen).to({x:270}, 800);
+
+  }
+
 
   function drawVoucherText(){
 		voucherText = new createjs.Bitmap(loader.getResult("voucherText"));
@@ -310,10 +336,11 @@ window.onload = function() {
     console.log("draw and animate frame three.");
     // refer to the creative brief, frame 3 for guidance.
 		drawButton();
-    drawVoucherText();
-    setTimeout(drawBluecopyThird, 500)
-    setTimeout(drawLimitedOffer, 1000)
-    setTimeout(drawLineRental, 1500);
+    setTimeout(drawVoucherText, 1000);
+    setTimeout(drawBluecopyThird, 2200)
+    setTimeout(drawLimitedOffer, 3400)
+    setTimeout(drawLineRental, 4600);
+    setTimeout(drawSheen, 7000)
   }
 
   function timeGone(){
